@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public GameObject Player => player;
 
+    private Transform _playerSprite;
     private TrailRenderer _dashTrail;
     private GameObject _shadownPlayer;
     private Animator _playerAnimator;
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
 
         player = GameObject.FindGameObjectWithTag("Player");
+        _playerSprite = GameObject.FindGameObjectWithTag("PlayerSprite").transform;
+
         _shadownPlayer = GameObject.FindGameObjectWithTag("ShadowPlayer");
         _rb = player.GetComponent<Rigidbody2D>();
         _col = player.GetComponent<CapsuleCollider2D>();
@@ -168,6 +171,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void HandleDirection()
     {
+        LookingAtDirection();
         if (_frameInput.Move.x == 0)
         {
             float deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -183,6 +187,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
         }
             
 
+    }
+    private void LookingAtDirection()
+    {
+        if (_frameInput.Move.x == -1)
+            _playerSprite.transform.localScale = new Vector2(-1, 1);
+        if (_frameInput.Move.x == 1)
+            _playerSprite.transform.localScale = new Vector2(1, 1);
     }
 
     #endregion

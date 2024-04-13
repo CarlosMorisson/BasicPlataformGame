@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - ShadowPlayer
+  - Hand
+  - PlayerSprite
   layers:
   - Default
   - TransparentFX
