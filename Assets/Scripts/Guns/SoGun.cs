@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoGun : ScriptableObject
 {
     [Header("GUN")]
-    [Tooltip("The time after the Shoot is temporarily unavailable after it has been used. "), Range(0,6)]
+    [Tooltip("The time after the Shoot is temporarily unavailable after it has been used. "), Range(0, 6)]
     public float GunCoolDown;
 
     [Tooltip("The Types Of Gun")]
@@ -16,9 +16,22 @@ public class SoGun : ScriptableObject
     };
     public GunType gunType;
 
-    [Tooltip("The speed of rotation around the player")]
-    public float GunSpeedRotation;
+    [System.Serializable]
+    public class ShootTypeSettings
+    {
+        public SoProjectile[] projectiles;
+    }
+
+    public enum ShootType
+    {
+        OneShoot,
+        TwoShoot
+    };
+    public ShootType shootType;
 
     [Tooltip("The projectile of gun")]
-    public GameObject GunProjectile;
+    public ShootTypeSettings[] shootSettings;
+
+    [Tooltip("The speed of rotation around the player")]
+    public float GunSpeedRotation;
 }
