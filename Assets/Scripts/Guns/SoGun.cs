@@ -16,21 +16,8 @@ public class SoGun : ScriptableObject
     };
     public GunType gunType;
 
-    [System.Serializable]
-    public class ShootTypeSettings
-    {
-        public SoProjectile[] projectiles;
-    }
-
-    public enum ShootType
-    {
-        OneShoot,
-        TwoShoot
-    };
-    public ShootType shootType;
-
     [Tooltip("The projectile of gun")]
-    public ShootTypeSettings[] shootSettings;
+    public GameObject[] GunProjectiles;
 
     [Tooltip("The speed of rotation around the player")]
     public float GunSpeedRotation;

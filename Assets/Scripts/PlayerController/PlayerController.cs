@@ -263,6 +263,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
                 _shadownPlayer.gameObject.SetActive(true);
             }
         }
+        _backTimeToConsume = false;
     }
     private void ExecuteBackTime()
     {

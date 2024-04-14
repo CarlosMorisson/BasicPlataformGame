@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: New So Projectile
   m_EditorClassIdentifier: 
   ProjectileEffect: {fileID: 0}
-  Projectile: {fileID: 0}
-  ProjectileSpeed: 0
+  Projectile: {fileID: 8312785408874701656, guid: 99778a65b1e9ef64cb7d3faa010adcb5, type: 3}
+  ProjectileSpeed: 1000
+  ProjectileLifeTime: 5

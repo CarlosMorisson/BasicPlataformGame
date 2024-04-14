@@ -11,6 +11,7 @@ public class GunController : MonoBehaviour, IGunController
     private GameObject _player;
     private Transform _playerHand;
     private Transform _playerGun;
+    private float _fireRate;
     [SerializeField]
     private SoGun _stats;
     void Start()
@@ -19,6 +20,7 @@ public class GunController : MonoBehaviour, IGunController
         _playerHand = GameObject.FindGameObjectWithTag("Hand").transform;
         _playerGun = GameObject.FindGameObjectWithTag("Hand").GetComponentInChildren<Transform>();
         _rotationSpeed = _stats.GunSpeedRotation;
+        _fireRate = _stats.GunCoolDown;
     }
 
     // Update is called once per frame
@@ -26,6 +28,8 @@ public class GunController : MonoBehaviour, IGunController
     {
         GatherInput();
         AroundThePlayer();
+        GetRightInput();
+        GetLeftInput();
     }
     #region GetInputs
     private void GatherInput()
@@ -35,9 +39,53 @@ public class GunController : MonoBehaviour, IGunController
             RightMouseDown = Input.GetKeyDown(KeyCode.Mouse1),
             LeftMouseDown = Input.GetKeyDown(KeyCode.Mouse0)
         };
+        if (_gunInput.RightMouseDown)
+            _rShoot = true;
+        if (_gunInput.LeftMouseDown)
+            _lShoot = true;
+    }
+    #endregion
+    #region RightMouseShoot
+    private bool _rShoot;
+    private float _rFireTimer;
+    private void GetRightInput()
+    {
+        if (_rShoot && _fireRate <= _rFireTimer)
+            ExecuteRightShoot();
+        if (_fireRate > _rFireTimer)
+        {
+            _rFireTimer += Time.deltaTime;
+        }
+        _rShoot = false;
+    }
+    private void ExecuteRightShoot()
+    {
+        Instantiate(_stats.GunProjectiles[0], _playerGun.transform.position, _playerGun.transform.rotation);
+        _rShoot = false;
+        _rFireTimer = 0;
     }
     #endregion
 
+    #region LeftMouseShoot
+    private bool _lShoot;
+    private float _lFireTimer;
+    private void GetLeftInput()
+    {
+        if (_lShoot && _fireRate <= _lFireTimer)
+            ExecuteLeftShoot();
+        if (_fireRate > _lFireTimer)
+        {
+            _lFireTimer += Time.deltaTime;
+        }
+        _lShoot = false;
+    }
+    private void ExecuteLeftShoot()
+    {
+        Instantiate(_stats.GunProjectiles[1], _playerGun.transform.position, _playerGun.transform.rotation);
+        _lShoot = false;
+        _lFireTimer = 0;
+    }
+    #endregion
     #region MoveGunAroundThePlayer
     private float _rotationSpeed;
     private bool _isFacingRight=true;

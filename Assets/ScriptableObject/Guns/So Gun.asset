@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5021b4638f06d5479b3de2644dbcaf9, type: 3}
   m_Name: So Gun
   m_EditorClassIdentifier: 
-  GunCoolDown: 1.66
+  GunCoolDown: 0.5
   gunType: 0
+  GunProjectiles:
+  - {fileID: 8312785408874701656, guid: 99778a65b1e9ef64cb7d3faa010adcb5, type: 3}
+  - {fileID: 9188996032471725103, guid: 42ec402cdb08b56469e0f01ae6f9b015, type: 3}
   GunSpeedRotation: 20
