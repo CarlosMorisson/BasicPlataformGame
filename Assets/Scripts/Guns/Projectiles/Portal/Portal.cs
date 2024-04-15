@@ -21,13 +21,14 @@ public class Portal : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collider)
 	{
-
-		if (collider.gameObject.tag == "Player")
+      
+        if (collider.gameObject.tag == "Player")
 		{
-
-			if (transform.rotation.z == 90)    //different math if portal is on top wall
+			Debug.Log(this.transform.eulerAngles);
+			if (transform.eulerAngles.z == 90 || transform.eulerAngles.z == 270 || transform.eulerAngles.z == -90 || transform.eulerAngles.z == -270)    //different math if portal is on top wall
 			{
-				theta = transform.eulerAngles.z - PortalG.transform.eulerAngles.z;//euler angles is used to find rotation in degrees
+                Debug.Log("Colidiu");
+                theta = transform.eulerAngles.z - PortalG.transform.eulerAngles.z;//euler angles is used to find rotation in degrees
 				theta = theta * Mathf.Deg2Rad;  //convert degrees to radians
 				Vector2 rel_velocity = collider.relativeVelocity;   //this will give the relative velocity of ball with respect to portal
 				vx = rel_velocity.x;
@@ -37,12 +38,12 @@ public class Portal : MonoBehaviour
 
 				Vector2 final_velocity = new Vector2(vxf, vyf);
 				Vector2 unit_velocity = 3 * final_velocity.normalized;
-
-				Vector3 final_pos = PortalG.transform.TransformPoint(0f, -4f, 0f);   //we create new object away from player to prevent it from re-entering the portal
+               
+                Vector3 final_pos = PortalG.transform.TransformPoint(0f, -4f, 0f);   //we create new object away from player to prevent it from re-entering the portal
 				collider.gameObject.transform.position = final_pos;
 			}
 
-			if (transform.rotation.z == 0)
+			if (transform.eulerAngles.z == 0 ||transform.eulerAngles.z==180|| transform.eulerAngles.z==-180)
 			{
 
 				theta = transform.eulerAngles.z + PortalG.transform.eulerAngles.z;
