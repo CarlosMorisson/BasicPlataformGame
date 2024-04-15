@@ -55,16 +55,11 @@ public class PortalProjectile : MonoBehaviour
         if (collision.gameObject.layer == 3) // Supondo que a camada 3 é a camada da superfície onde o projétil pode colidir
         {
             Vector2 contactPoint = collision.ClosestPoint(transform.position);
-
-            // Pega a direção da colisão
-            Vector2 contactDirection = (collision.transform.position - transform.position).normalized;
-
-            // Calcula a rotação baseada na direção da colisão
-            float angle = Mathf.Atan2(contactDirection.y, contactDirection.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            // Instancia o objeto adaptado à superfície
+            Vector2 directionToContact = contactPoint - (Vector2)transform.position;
+            float angle = Mathf.Atan2(directionToContact.y, directionToContact.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0, 0, angle+90);
             Instantiate(_stats.ProjectileEffect, contactPoint, rotation);
+            Destroy(gameObject);
         }
     }
 }
