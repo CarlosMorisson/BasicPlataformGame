@@ -19,6 +19,7 @@ public class PortalProjectile : MonoBehaviour
     Vector2 _shootDirection;
     private GameObject _shootEffect;
     private Color _shootEffectColor;
+    private string _gameTag;
     void Start()
     {
         GetReferences();
@@ -34,9 +35,11 @@ public class PortalProjectile : MonoBehaviour
         {
             case PortalLeftOrRight.Left:
                 _shootEffectColor = Color.red;
+                _gameTag = "RedPortal";
                 break;
             case PortalLeftOrRight.Right:
                 _shootEffectColor = Color.blue;
+                _gameTag = "BluePortal";    
                 break;
 
         }
@@ -58,7 +61,10 @@ public class PortalProjectile : MonoBehaviour
             Vector2 directionToContact = contactPoint - (Vector2)transform.position;
             float angle = Mathf.Atan2(directionToContact.y, directionToContact.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.Euler(0, 0, angle+90);
-            Instantiate(_stats.ProjectileEffect, contactPoint, rotation);
+            GameObject portal=Instantiate(_stats.ProjectileEffect, contactPoint, rotation);
+            portal.GetComponent<SpriteRenderer>().color = _shootEffectColor;
+            portal.gameObject.tag = _gameTag;
+            PortalController.instance.GetNewPortal(portal, _gameTag);
             Destroy(gameObject);
         }
     }

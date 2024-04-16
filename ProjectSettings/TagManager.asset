@@ -8,6 +8,8 @@ TagManager:
   - ShadowPlayer
   - Hand
   - PlayerSprite
+  - BluePortal
+  - RedPortal
   layers:
   - Default
   - TransparentFX

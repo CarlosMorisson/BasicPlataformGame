@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa310fb975e0b2d41ac80cdf380e9c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalProjectile: 0
+  portalProjectile: 1
   _stats: {fileID: 11400000, guid: c52afa39ebbaf6241b339d28a99cb988, type: 2}
   parent: {fileID: 9188996032471725103}
 --- !u!50 &925821215636748275

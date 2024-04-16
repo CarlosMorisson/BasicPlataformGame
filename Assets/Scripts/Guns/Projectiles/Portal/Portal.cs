@@ -4,63 +4,71 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-	public GameObject PortalG;
 	private float theta;    //angle of the portal 
 	public bool top;
 	private float vx, vy, vxf, vyf;
-	// Use this for initialization
-	void Start()
+	public GameObject OtherPortal;
+	[SerializeField]
+	[Range(0, 10)]
+	private float teleportRange=1;
+    [SerializeField]
+    private LayerMask groundLayer;
+    // Use this for initialization
+    void Start()
 	{
-
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-	}
-
-	void OnCollisionEnter2D(Collision2D collider)
-	{
-      
-        if (collider.gameObject.tag == "Player")
+		if (gameObject.tag == "BluePortal")
 		{
-			Debug.Log(this.transform.eulerAngles);
-			if (transform.eulerAngles.z == 90 || transform.eulerAngles.z == 270 || transform.eulerAngles.z == -90 || transform.eulerAngles.z == -270)    //different math if portal is on top wall
-			{
-                Debug.Log("Colidiu");
-                theta = transform.eulerAngles.z - PortalG.transform.eulerAngles.z;//euler angles is used to find rotation in degrees
-				theta = theta * Mathf.Deg2Rad;  //convert degrees to radians
-				Vector2 rel_velocity = collider.relativeVelocity;   //this will give the relative velocity of ball with respect to portal
-				vx = rel_velocity.x;
-				vy = rel_velocity.y;
-				vxf = vx * Mathf.Cos(theta) + vy * Mathf.Sin(theta);        //linear angle transformation
-				vyf = -vx * Mathf.Sin(theta) + vy * Mathf.Cos(theta);
+			OtherPortal = PortalController.instance.RedPortal;
 
-				Vector2 final_velocity = new Vector2(vxf, vyf);
-				Vector2 unit_velocity = 3 * final_velocity.normalized;
-               
-                Vector3 final_pos = PortalG.transform.TransformPoint(0f, -4f, 0f);   //we create new object away from player to prevent it from re-entering the portal
-				collider.gameObject.transform.position = final_pos;
-			}
+		}
+		else if (gameObject.tag == "RedPortal")
+		{
+			OtherPortal = PortalController.instance.BluePortal;
 
-			if (transform.eulerAngles.z == 0 ||transform.eulerAngles.z==180|| transform.eulerAngles.z==-180)
-			{
-
-				theta = transform.eulerAngles.z + PortalG.transform.eulerAngles.z;
-				theta = theta * Mathf.Deg2Rad;
-				Vector2 rel_velocity = collider.relativeVelocity;
-				vx = rel_velocity.x;
-				vy = rel_velocity.y;
-				vxf = vx * Mathf.Cos(theta) + vy * Mathf.Sin(theta);
-				vyf = vx * Mathf.Sin(theta) - vy * Mathf.Cos(theta);
-
-				Vector2 final_velocity = new Vector2(vxf, vyf);
-				Vector2 unit_velocity = 3 * final_velocity.normalized;
-
-				Vector3 final_pos = PortalG.transform.TransformPoint(0f, 4f, 0f);
-				collider.gameObject.transform.position = final_pos;
-			}
-			collider.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(vxf, vyf);
 		}
 	}
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            PortalController.instance.entered = true;
+            // Teleport the player
+            Vector2 teleportPosition = FindTeleportPosition();
+            collider.gameObject.transform.position = teleportPosition;
+
+            // "Eject" the player
+            Vector2 ejectDirection = (teleportPosition - (Vector2)OtherPortal.transform.position).normalized;
+            collider.gameObject.GetComponent<Rigidbody2D>().velocity = ejectDirection * 10f;
+        }
+    }
+
+    Vector2 FindTeleportPosition()
+    {
+        Vector2 teleportPosition = Vector2.zero;
+        bool foundPosition = false;
+
+        while (!foundPosition)
+        {
+            float angle = Random.Range(0, 360);
+            Vector2 randomDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            teleportPosition = (Vector2)OtherPortal.transform.position + randomDirection * teleportRange;
+
+            RaycastHit2D hit = Physics2D.Raycast(teleportPosition, -randomDirection, teleportRange, groundLayer);
+
+            if (!hit.collider)
+            {
+                foundPosition = true;
+            }
+
+        }
+
+        return teleportPosition;
+    }
+
 }
