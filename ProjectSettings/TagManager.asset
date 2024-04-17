@@ -10,6 +10,7 @@ TagManager:
   - PlayerSprite
   - BluePortal
   - RedPortal
+  - FallPlataform
   layers:
   - Default
   - TransparentFX
