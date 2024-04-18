@@ -10,6 +10,9 @@ TagManager:
   - PlayerSprite
   - BluePortal
   - RedPortal
+  - KillEnemy
+  - FallingPlataform
+  - Damage
   layers:
   - Default
   - TransparentFX
