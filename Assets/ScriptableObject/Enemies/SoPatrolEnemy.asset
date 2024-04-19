@@ -15,4 +15,6 @@ MonoBehaviour:
   EnemyLife: 1
   EnemySpeed: 8
   EnemyDamage: 5
-  DeathEffect: {fileID: 0}
+  DeathEffect: {fileID: 3220079402430269842, guid: b35adddf4d6e699449c09888d1c4c66b, type: 3}
+  Projectile: {fileID: 0}
+  HitEffect: {fileID: 2100000, guid: d5034f8e6b453e748b86e7d4f65b3926, type: 2}

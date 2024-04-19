@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class EnemieStatic : MonoBehaviour
+public class EnemieStatic : Enemy
 {
-    public SoEnemie _stats;
     [SerializeField]
     private Transform RightScope, LeftScope;
     private Animator anim;
@@ -32,6 +31,6 @@ public class EnemieStatic : MonoBehaviour
     }
     public void ShootLeft()
     {
-        Instantiate(_stats.Projectile, LeftScope.transform.position, RightScope.transform.rotation, transform);
+        Instantiate(_stats.Projectile, LeftScope.transform.position, LeftScope.transform.rotation, transform);
     }
 }

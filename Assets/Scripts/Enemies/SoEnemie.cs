@@ -10,5 +10,6 @@ public class SoEnemie : ScriptableObject
     public float EnemyDamage;
     public GameObject DeathEffect;
     public GameObject Projectile;
+    public Material HitEffect;
 
 }

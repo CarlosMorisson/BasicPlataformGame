@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalProjectile : MonoBehaviour
+public class PortalProjectile : ProjectileDefault
 {
     public enum PortalLeftOrRight
     {
@@ -11,26 +11,14 @@ public class PortalProjectile : MonoBehaviour
     };
     public PortalLeftOrRight portalProjectile;
     [SerializeField]
-    private SoProjectile _stats;
-    [SerializeField]
-    private GameObject parent;
-    private float _speed;
-    private float _lifeTime;
-    Vector2 _shootDirection;
-    private GameObject _shootEffect;
     private Color _shootEffectColor;
     private string _gameTag;
     void Start()
     {
-        GetReferences();
-        Destroy(parent, _lifeTime);
-        //
-        SetDirection();
+        GetPortalReferences();
     }
-    private void GetReferences()
+    private void GetPortalReferences()
     {
-        _speed = _stats.ProjectileSpeed;
-        _lifeTime = _stats.ProjectileLifeTime;
         switch (portalProjectile)
         {
             case PortalLeftOrRight.Left:
@@ -44,16 +32,12 @@ public class PortalProjectile : MonoBehaviour
 
         }
     }
-    private void SetDirection()
-    {
-        GetComponent<Rigidbody2D>().AddForce(transform.right * _speed);
-    }
     // Update is called once per frame
     void Update()
     {
         
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 3) // Supondo que a camada 3 é a camada da superfície onde o projétil pode colidir
         {

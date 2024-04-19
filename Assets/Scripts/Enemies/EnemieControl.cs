@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemieControl : MonoBehaviour
+public class EnemieControl : Enemy
 {
-    public SoEnemie _stats;
-    private float _life;
+
     private float _damage;
     private Rigidbody2D _rig;
     private Animator anim;
@@ -64,14 +63,5 @@ public class EnemieControl : MonoBehaviour
     }
 
 
-    #endregion
-
-    #region Combat
-    public void ReceiveDamage(float damage)
-    {
-        _life = _stats.EnemyLife;
-        _life -= damage;
-        Destroy(gameObject);
-    }
     #endregion
 }
