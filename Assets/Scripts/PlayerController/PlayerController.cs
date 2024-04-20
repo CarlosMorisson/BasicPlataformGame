@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using DG.Tweening;
 public class PlayerController : MonoBehaviour, IPlayerController
 {
+    public static PlayerController instance;
     [SerializeField] private SoStats _stats;
     private GameObject player;
     private Rigidbody2D _rb;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private Animator _playerAnimator;
     private void Awake()
     {
-
+        instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         _playerSprite = GameObject.FindGameObjectWithTag("PlayerSprite").transform;
 
@@ -275,6 +276,29 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _canCountCoolDown = true;
         _backTimeToConsume = false;
     }
+    #endregion
+    #region CombatPlayer
+    [SerializeField]
+    private Material damageMaterial;
+    public void ReceiveDamage()
+    {
+        //show GameOver
+        _playerAnimator.CrossFade("Fall Animation", 0);
+        StartCoroutine(ChangeSpriteMaterial());
+        //sprite pisca em branco e vai pra cima 
+
+    }
+    private IEnumerator ChangeSpriteMaterial()
+    {
+        Material newMaterial = _playerSprite.GetComponent<SpriteRenderer>().material;
+        Material _playerMaterial = newMaterial;
+        transform.DOJump(new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z), 3, 1, 3);
+        _playerSprite.GetComponent<SpriteRenderer>().material = damageMaterial;
+        yield return new WaitForSeconds(2f);
+        _rb.isKinematic = true;
+        _playerSprite.GetComponent<SpriteRenderer>().material = _playerMaterial;
+    }
+
     #endregion
 
     private void ApplyMovement() => _rb.velocity = _frameVelocity;

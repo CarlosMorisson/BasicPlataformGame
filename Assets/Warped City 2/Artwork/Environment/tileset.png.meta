@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -4170,15 +4170,15 @@ TextureImporter:
       tileset_108: -2144703309
       tileset_124: 389236227
       tileset_6: 588037093
-      tileset_70: -266922540
-      tileset_145: 564194804
       tileset_169: 1257005305
+      tileset_145: 564194804
+      tileset_70: -266922540
       tileset_103: -2010678257
       tileset_46: -1823118531
       tileset_8: -1480631642
-      tileset_52: 610477927
-      tileset_101: 1583558369
       tileset_177: 681679426
+      tileset_101: 1583558369
+      tileset_52: 610477927
       tileset_125: 1372349471
       tileset_175: 1039435234
       tileset_85: -1033769497

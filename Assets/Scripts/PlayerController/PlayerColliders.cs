@@ -14,10 +14,8 @@ public class PlayerColliders : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
 
     }
-    private void Update()
-    {
-        
-    }
+    #region CheckColliders
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("FallingPlataform"))
@@ -33,5 +31,12 @@ public class PlayerColliders : MonoBehaviour
             transform.DOJump(new Vector3(transform.position.x, transform.position.y + jumpAfterKillEnemy, transform.position.z), jumpVelocity, 1, 0.3f);
             collision.gameObject.GetComponentInParent<Enemy>().ReceiveDamage(10);
         }
+        if (collision.gameObject.CompareTag("Damage"))
+        {
+            PlayerController.instance.ReceiveDamage();
+        }
     }
+    #endregion
+
+   
 }
